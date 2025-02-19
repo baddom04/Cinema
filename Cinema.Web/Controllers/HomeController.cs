@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Cinema.DataAccess;
 using Cinema.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,13 @@ namespace Cinema.Web.Controllers
 
         public IActionResult Index()
         {
+            //CinemaDbContext context = new(/* ... */);
+
+            //context.Movies
+            //    .Where(m => m.Year > 2020 && m.Length < 120)
+            //    .OrderBy(m => m.Title)
+            //    .ToList();
+
             return View();
         }
 

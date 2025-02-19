@@ -6,7 +6,7 @@ namespace Cinema.DataAccess.Services
 {
     public class MoviesSqlService : IMoviesService
     {
-        private static CinemaDbContext _context;
+        private CinemaDbContext _context;
         public MoviesSqlService(CinemaDbContext context)
         {
             _context = context;
@@ -21,11 +21,13 @@ namespace Cinema.DataAccess.Services
                 ORDER BY CreatedAt DESC
                 """;
 
-            sqlQuery = count > 0 ? FormattableStringFactory.Create(sqlQuery.Format + $"LIMIT {count}") : sqlQuery;
+            sqlQuery = count > 0 ? FormattableStringFactory.Create(sqlQuery.Format + $"TOP {count}") : sqlQuery;
 
             return await _context.Movies
                 .FromSql(sqlQuery)
                 .ToListAsync();
+
+            //return count is null ? await _context.Movies.OrderBy(x => x.CreatedAt).ToListAsync() : await _context.Movies.OrderBy(x => x.CreatedAt).Take(count.Value).ToListAsync();
         }
         public async Task<Movie> GetByIdAsync(int id)
         {
@@ -40,6 +42,10 @@ namespace Cinema.DataAccess.Services
             return await _context.Movies
                 .FromSql(sqlQuery)
                 .FirstOrDefaultAsync() ?? throw new EntityNotFoundException();
+
+            //  To Linq statement's end: ToQueryString() to see the SQL string
+
+            //return await _context.Movies.FindAsync(id) ?? throw new EntityNotFoundException();
         }
     }
 }
