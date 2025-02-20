@@ -1,4 +1,5 @@
 ﻿using Cinema.DataAccess.Services;
+using Cinema.DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,10 +12,15 @@ namespace Cinema.DataAccess
         {
             // Database
             var connectionString = config.GetConnectionString("DefaultConnection");
-            services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<CinemaDbContext>(options => options
+                .UseSqlServer(connectionString)
+                .UseLazyLoadingProxies()
+            );
 
             // Services
-            services.AddScoped<IMoviesService, MoviesSqlService>();
+            services.AddScoped<IMoviesService, MovieService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IScreeningService, ScreeningService>();
 
             return services;
         }

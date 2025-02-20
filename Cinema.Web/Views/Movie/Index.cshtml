@@ -1,11 +1,6 @@
-﻿@using ELTE.Cinema.Web.Utility
+﻿@using Cinema.Web.Utility
 
-@model IList<MovieViewModel>
-
-<h1>Movies</h1>
-
-
-@if (!Model.Any())
+@if (Model.Count == 0)
 {
     <div class="contentText">No movie available.</div>
 }
@@ -17,10 +12,11 @@ else
         {
             <div class="col">
                 <div class="card h-100">
-                    <img class="card-img-top" src="@movie.Image.ToImgSrc()" alt="@movie.Title" />
+                    <img class="card-img-top" src="@Cinema.Web.Utility.ImageExtension.ToImgSrc(movie.Image)" alt="@movie.Title" />
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a class="stretched-link text-dark text-underline-hover" asp-action="Details" asp-controller="Movie" asp-route-movieId="@movie.Id">@movie.Title</a>
+                            <a class="stretched-link text-dark text-underline-hover" asp-action="Details"
+                               asp-controller="Movie" asp-route-movieId="@movie.Id">@movie.Title</a>
                         </h5>
                     </div>
                 </div>

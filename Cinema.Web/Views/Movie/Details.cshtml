@@ -1,5 +1,5 @@
-﻿@using ELTE.Cinema.Web.Utility
-@model MovieDetailViewModel
+﻿@using Cinema.Web.Utility
+@model Cinema.Web.Models.MovieDetailViewModel
 
 
 <div class="row">
@@ -15,4 +15,21 @@
         </ul>
         <p>@Model.Movie.Synopsis</p>
     </div>
+</div>
+
+<hr class="mt-4" />
+<div>
+    <h2 class="mt-0">Screenings</h2>
+
+    @{
+        var viewData = new ViewDataDictionary(this.ViewData)
+    {
+    { "showMovieDetails", false }
+    };
+
+        foreach (var screening in Model.Screenings)
+        {
+            <partial name="ScreeningDetailComponent" model="screening" view-data="viewData" />
+        }
+    }
 </div>

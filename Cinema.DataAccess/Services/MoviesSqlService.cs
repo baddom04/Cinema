@@ -1,4 +1,5 @@
 ﻿using Cinema.DataAccess.Models;
+using Cinema.DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 
@@ -13,19 +14,28 @@ namespace Cinema.DataAccess.Services
         }
         public async Task<IReadOnlyCollection<Movie>> GetLatestMoviesAsync(int? count = null)
         {
-            FormattableString sqlQuery =
+            if (count is null)
+            {
+                return await _context.Movies.FromSql(
+                    $"""
+                 SELECT
+                 Id, Title, Year, Director, Synopsis, Length, Image, CreatedAt, DeletedAt
+                 FROM Movies
+                 WHERE DeletedAt is null
+                 ORDER BY CreatedAt DESC
+                 """
+                ).ToListAsync();
+            }
+
+            return await _context.Movies.FromSql(
                 $"""
-                SELECT Id, Title, Year, Director, Synopsis, Length, Image, CreatedAt, DeletedAt
-                FROM Movies
-                WHERE DeletedAt IS NULL
-                ORDER BY CreatedAt DESC
-                """;
-
-            sqlQuery = count > 0 ? FormattableStringFactory.Create(sqlQuery.Format + $"TOP {count}") : sqlQuery;
-
-            return await _context.Movies
-                .FromSql(sqlQuery)
-                .ToListAsync();
+             SELECT TOP ({count.Value})
+             Id, Title, Year, Director, Synopsis, Length, Image, CreatedAt, DeletedAt
+             FROM Movies
+             WHERE DeletedAt is null
+             ORDER BY CreatedAt DESC
+             """
+            ).ToListAsync();
 
             //return count is null ? await _context.Movies.OrderBy(x => x.CreatedAt).ToListAsync() : await _context.Movies.OrderBy(x => x.CreatedAt).Take(count.Value).ToListAsync();
         }

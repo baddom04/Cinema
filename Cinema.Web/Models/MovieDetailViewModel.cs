@@ -2,6 +2,7 @@
 {
     public class MovieDetailViewModel
     {
-        public MovieViewModel Movie { get; set; }
+        public required MovieViewModel Movie { get; set; }
+        public required List<ScreeningViewModel> Screenings { get; set; }
     }
 }

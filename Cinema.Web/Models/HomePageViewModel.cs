@@ -2,6 +2,7 @@
 {
     public class HomePageViewModel
     {
-        public List<MovieViewModel> LatestMovies { get; set; }
+        public required List<MovieViewModel> LatestMovies { get; set; }
+        public required List<ScreeningViewModel> TodayScreenings { get; set; }
     }
 }

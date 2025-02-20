@@ -1,30 +1,33 @@
-using System.Diagnostics;
 using AutoMapper;
-using Cinema.DataAccess;
 using Cinema.DataAccess.Models;
-using Cinema.DataAccess.Services;
+using Cinema.DataAccess.Services.Interfaces;
 using Cinema.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Cinema.Web.Controllers
 {
-    public class HomeController(ILogger<HomeController> logger, IMoviesService movieService, IMapper mapper, IConfiguration configuration) : Controller
+    public class HomeController(
+        ILogger<HomeController> logger, 
+        IMoviesService movieService,
+        IScreeningService screeningService,
+        IMapper mapper, 
+        IConfiguration configuration
+        ) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
 
         private readonly IMoviesService _moviesService = movieService;
+        private readonly IScreeningService _screeningService = screeningService;
         private readonly IMapper _mapper = mapper;
         private readonly IConfiguration _configuration = configuration;
-        private readonly int _movieCount = 5;
 
         public async Task<IActionResult> Index()
         {
-            IReadOnlyCollection<Movie> lastestMovies = await _moviesService.GetLatestMoviesAsync(int.Parse(_configuration["NewMovieCount"]!));
-            List<MovieViewModel> lastestMoviesViewModels = _mapper.Map<List<MovieViewModel>>(lastestMovies);
-
             var homePageViewModel = new HomePageViewModel()
             {
-                LatestMovies = lastestMoviesViewModels
+                LatestMovies = _mapper.Map<List<MovieViewModel>>(await _moviesService.GetLatestMoviesAsync(int.Parse(_configuration["NewMovieCount"]!))),
+                TodayScreenings = _mapper.Map<List<ScreeningViewModel>>(await _screeningService.GetForDateAsync(DateTime.Now)),
             };
 
             return View(homePageViewModel);

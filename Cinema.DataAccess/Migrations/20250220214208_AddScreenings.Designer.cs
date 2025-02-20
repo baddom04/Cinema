@@ -4,6 +4,7 @@ using Cinema.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cinema.DataAccess.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250220214208_AddScreenings")]
+    partial class AddScreenings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,21 +133,17 @@ namespace Cinema.DataAccess.Migrations
 
             modelBuilder.Entity("Cinema.DataAccess.Models.Screening", b =>
                 {
-                    b.HasOne("Cinema.DataAccess.Models.Movie", "Movie")
+                    b.HasOne("Cinema.DataAccess.Models.Movie", null)
                         .WithMany("Screenings")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cinema.DataAccess.Models.Room", "Room")
+                    b.HasOne("Cinema.DataAccess.Models.Room", null)
                         .WithMany("Screenings")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Cinema.DataAccess.Models.Movie", b =>

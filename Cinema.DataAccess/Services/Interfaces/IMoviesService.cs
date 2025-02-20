@@ -1,6 +1,6 @@
 ﻿using Cinema.DataAccess.Models;
 
-namespace Cinema.DataAccess.Services
+namespace Cinema.DataAccess.Services.Interfaces
 {
     public interface IMoviesService
     {
