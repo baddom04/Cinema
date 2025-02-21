@@ -8,5 +8,16 @@ namespace Cinema.DataAccess
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Screening> Screenings { get; set; }
+        public DbSet<Seat> Seats { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Seat>()
+                .HasOne(s => s.Reservation)
+                .WithMany(r => r.Seats)
+                .HasForeignKey(s => s.ReservationId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

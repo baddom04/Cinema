@@ -1,4 +1,4 @@
-﻿namespace Cinema.DataAccess
+﻿namespace Cinema.DataAccess.Exceptions
 {
     public class EntityNotFoundException : Exception
     {
