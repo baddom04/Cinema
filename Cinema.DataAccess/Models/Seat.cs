@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cinema.DataAccess.Models
@@ -12,15 +13,14 @@ namespace Cinema.DataAccess.Models
 
         public virtual Screening Screening { get; set; } = null!;
 
+        [Required]
         public SeatStatus Status { get; set; }
 
         [ForeignKey(nameof(Reservation))]
         public int? ReservationId { get; set; }
 
         public virtual Reservation? Reservation { get; set; }
-
-        [Owned]
-        public record SeatPosition(int Row, int Column);
+        public SeatPosition Position { get; set; } = null!;
     }
     
 }

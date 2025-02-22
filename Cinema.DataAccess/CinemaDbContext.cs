@@ -9,6 +9,7 @@ namespace Cinema.DataAccess
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Screening> Screenings { get; set; }
         public DbSet<Seat> Seats { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

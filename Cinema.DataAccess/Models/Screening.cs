@@ -18,5 +18,6 @@ namespace Cinema.DataAccess.Models
 
         public virtual Movie Movie { get; set; } = null!;
         public virtual Room Room { get; set; } = null!;
+        public virtual ICollection<Seat> Seats { get; set; } = [];
     }
 }

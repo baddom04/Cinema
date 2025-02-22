@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Cinema.DataAccess.Models;
 using Cinema.DataAccess.Services.Interfaces;
 using Cinema.Web.Models;
 using Microsoft.AspNetCore.Mvc;

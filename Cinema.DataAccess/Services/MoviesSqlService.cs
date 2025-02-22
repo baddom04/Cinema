@@ -1,7 +1,7 @@
 ﻿using Cinema.DataAccess.Models;
 using Cinema.DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
+using Cinema.DataAccess.Exceptions;
 
 namespace Cinema.DataAccess.Services
 {

@@ -1,4 +1,5 @@
 ﻿using Cinema.DataAccess.Models;
+using Cinema.DataAccess.Exceptions;
 using Cinema.DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

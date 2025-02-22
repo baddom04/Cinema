@@ -24,7 +24,8 @@
     @{
         var viewData = new ViewDataDictionary(this.ViewData)
     {
-    { "showMovieDetails", false }
+    { "showMovieDetails", false },
+    { "showReservationLink", true }
     };
 
         foreach (var screening in Model.Screenings)
