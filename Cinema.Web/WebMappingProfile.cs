@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Cinema.DataAccess.Models;
 using Cinema.Web.Models;
-using static Cinema.DataAccess.Models.Seat;
 
 namespace Cinema.Web
 {
