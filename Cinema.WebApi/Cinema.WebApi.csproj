@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9606530c-835f-466e-a400-75bacb0a84f0</UserSecretsId>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cinema.DataAccess\Cinema.DataAccess.csproj" />
+    <ProjectReference Include="..\Cinema.Shared\Cinema.Shared.csproj" />
   </ItemGroup>
 
 </Project>
