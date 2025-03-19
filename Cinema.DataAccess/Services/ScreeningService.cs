@@ -29,5 +29,12 @@ namespace Cinema.DataAccess.Services
                 .Where(scr => scr.StartsAt.Date.Equals(date.Date))
                 .ToListAsync();
         }
+
+        public async Task<List<Seat>> GetSeatsByScreeningAsync(int id)
+        {
+            return await _context.Seats
+                .Where(s => s.ScreeningId == id)
+                .ToListAsync();
+        }
     }
 }

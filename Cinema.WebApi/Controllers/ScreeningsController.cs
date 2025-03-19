@@ -26,5 +26,15 @@ namespace Cinema.WebApi.Controllers
             ScreeningResponseDto screening = _mapper.Map<ScreeningResponseDto>(await _screeningService.GetByIdAsync(id));
             return Ok(screening);
         }
+
+        [HttpGet]
+        [Route("{id}/seats")]
+        public async Task<IActionResult> GetSeatsByScreening([FromRoute] int id)
+        {
+            var seats = await _screeningService.GetSeatsByScreeningAsync(id);
+            var seatResponseDtos = _mapper.Map<IEnumerable<SeatResponseDto>>(seats);
+
+            return Ok(seatResponseDtos);
+        }
     }
 }

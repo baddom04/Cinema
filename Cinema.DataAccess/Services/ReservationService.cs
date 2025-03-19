@@ -7,10 +7,11 @@ using Microsoft.Extensions.Options;
 
 namespace Cinema.DataAccess.Services
 {
-    public class ReservationService(CinemaDbContext context, IOptions<ReservationSettings> reservationSettings) : IReservationService
+    public class ReservationService(CinemaDbContext context, IOptions<ReservationSettings> reservationSettings, IEmailsService emailsService) : IReservationService
     {
         private readonly CinemaDbContext _context = context;
         private readonly ReservationSettings _reservationSettings = reservationSettings.Value;
+        private readonly IEmailsService _emailsService = emailsService;
         public async Task AddAsync(long screeningId, Reservation reservation)
         {
             if (reservation.Seats.Count == 0)
@@ -53,11 +54,41 @@ namespace Cinema.DataAccess.Services
             try
             {
                 await _context.SaveChangesAsync();
+
+                _ = _emailsService.SendEmailAsync(reservation.Email,
+                    "[Cinema] new reservation",
+                    GenerateEmailBody(screening, reservation));
             }
             catch (DbUpdateException ex)
             {
                 throw new SaveFailedException("Failed to create reservation", ex);
             }
+        }
+        private static string GenerateEmailBody(Screening screening, Reservation reservation)
+        {
+            return $"""
+<p>
+    <b>Your reservation has been created successfully!</b>
+</p>
+<table>
+    <tr>
+        <td><b>Movie:</b></td>
+        <td>{screening.Movie.Title}</td>
+    </tr>
+    <tr>
+        <td><b>Time:</b></td>
+        <td>{screening.StartsAt}</td>
+    </tr>
+    <tr>
+        <td><b>Room:</b></td>
+        <td>{screening.Room.Name}</td>
+    </tr>
+    <tr>
+        <td><b>Seats:</b></td>
+        <td>{string.Join(", ", reservation.Seats.Select(s => $"(Row {s.Position.Row}, Col {s.Position.Column})"))}</td>
+    </tr>
+</table>
+""";
         }
     }
 }

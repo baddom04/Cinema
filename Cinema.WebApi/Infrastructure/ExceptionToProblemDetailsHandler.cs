@@ -12,9 +12,12 @@ namespace Cinema.WebApi.Infrastructure
         private readonly IProblemDetailsService _problemDetailsService = problemDetailsService;
 
         /// <summary>
-        /// Constructor
+        /// Map the extensions to status codes and create problemDetails
         /// </summary>
-        /// <param name="problemDetailsService"></param>
+        /// <param name="httpContext"></param>
+        /// <param name="exception"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             return exception switch
@@ -36,11 +39,11 @@ namespace Cinema.WebApi.Infrastructure
         }
 
         /// <summary>
-        /// Map the exceptions to status codes and create problemDetails
+        /// 
         /// </summary>
         /// <param name="httpContext"></param>
         /// <param name="exception"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="statusCode"></param>
         /// <returns></returns>
         private async Task<bool> CreateProblemDetails(HttpContext httpContext, Exception exception, int statusCode)
         {

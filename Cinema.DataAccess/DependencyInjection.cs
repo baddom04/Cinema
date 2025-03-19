@@ -13,6 +13,7 @@ namespace Cinema.DataAccess
         {
             //Config
             services.Configure<ReservationSettings>(config.GetSection("ReservationSettings"));
+            services.Configure<EmailSettings>(config.GetSection("EmailSettings"));
 
             // Database
             var connectionString = config.GetConnectionString("DefaultConnection");
