@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cinema.DataAccess.Models
 {
@@ -14,5 +15,10 @@ namespace Cinema.DataAccess.Models
         public DateTime CreatedAt { get; set; }
         public string? Comment { get; set; }
         public virtual ICollection<Seat> Seats { get; set; } = [];
+
+        public string? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User? User { get; set; }
     }
 }
